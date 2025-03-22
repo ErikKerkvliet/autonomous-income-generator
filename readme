@@ -1,0 +1,159 @@
+# Autonomous Income Generator
+
+A self-sustaining, income-generating Python application that operates autonomously with minimal user intervention after initial setup.
+
+## 🚀 Features
+
+- **Fully Autonomous Operation**: Runs continuously with minimal human intervention
+- **Multiple Income Strategies**:
+  - **Content Creation**: Generates and publishes content to attract Patreon subscribers
+  - **Freelancing**: Automatically bids on and completes coding tasks on Upwork
+  - **Paid Surveys**: Automates participation in paid online surveys
+- **Web Automation**: Advanced browser automation with anti-detection capabilities
+- **AI Integration**: Uses LLM APIs (Claude, DeepSeek, Gemma) for content generation and task completion
+- **Comprehensive Monitoring**: Real-time monitoring dashboard for tracking income and performance
+- **Extensible Architecture**: Easily add new income strategies through the modular plugin system
+
+## 📋 Prerequisites
+
+- Python 3.8 or higher
+- MySQL database server
+- Chrome browser installed
+- API keys for supported LLMs
+- Accounts on supported platforms:
+  - Upwork.com
+  - Patreon.com
+  - Novel.net
+  - Webnovel.com
+  - Scribblehub.com
+  - Survey platforms (EuroClix, PanelClix, etc.)
+
+## 🔧 Installation
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/yourusername/autonomous-income-generator.git
+   cd autonomous-income-generator
+   ```
+
+2. **Create a virtual environment**:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. **Install dependencies**:
+   ```bash
+   pip install -e .
+   ```
+
+4. **Set up the database**:
+   ```bash
+   mysql -u root -p
+   ```
+
+   In the MySQL shell:
+   ```sql
+   CREATE DATABASE income_generator;
+   CREATE USER 'income_user'@'localhost' IDENTIFIED BY 'choose_a_secure_password';
+   GRANT ALL PRIVILEGES ON income_generator.* TO 'income_user'@'localhost';
+   FLUSH PRIVILEGES;
+   EXIT;
+   ```
+
+5. **Configure the application**:
+   Create a `.env` file in the root directory by copying the example:
+   ```bash
+   cp .env.example .env
+   ```
+
+   Edit the `.env` file to add your API keys, credentials, and configuration settings.
+
+## 💻 Usage
+
+Start the application with:
+
+```bash
+python -m app
+```
+
+Access the monitoring dashboard:
+
+```
+http://localhost:8080
+```
+
+## 📊 Monitoring
+
+The application provides a web-based monitoring dashboard that shows:
+
+- Total income generated
+- Active income strategies
+- Recent income transactions
+- Performance metrics
+- Error logs
+
+## 🔍 Income Strategy Details
+
+### Content Creation Strategy
+
+Automatically generates and publishes content to build an audience and generate income through Patreon.
+
+1. Creates original content using LLM APIs
+2. Publishes content on platforms like Novel.net, Webnovel.com, and Scribblehub.com
+3. Manages a Patreon account for monetization
+4. Updates patrons with new content
+5. Tracks subscribers and earnings
+
+### Freelancing Strategy
+
+Finds, bids on, and completes freelance coding tasks on Upwork.
+
+1. Automatically searches for suitable jobs
+2. Evaluates job postings using configurable criteria
+3. Generates custom proposals
+4. Communicates with clients
+5. Completes tasks using LLM assistance
+6. Delivers completed work
+
+### Paid Surveys Strategy
+
+Finds and completes online surveys from various platforms.
+
+1. Works with multiple survey platforms
+2. Selects surveys based on reward and estimated completion time
+3. Uses a consistent persona profile to complete surveys
+4. Handles screening questions and qualification checks
+5. Tracks earnings across all platforms
+
+## 🧩 Extending the Application
+
+The application is designed to be extensible. You can add:
+
+- New income strategies
+- Additional website integrations
+- Alternative LLM API providers
+- Custom monitoring metrics
+
+See the [documentation](docs/extending.md) for detailed instructions.
+
+## ⚠️ Disclaimer
+
+This application is provided for educational and research purposes only. Using automation may violate the Terms of Service of some platforms. Always review each platform's Terms of Service before use. The developers are not responsible for any consequences of using this application.
+
+## 📘 Documentation
+
+For full documentation, see the [docs](docs/) directory or the [online documentation](https://your-documentation-url.com).
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 🙏 Acknowledgements
+
+- Thanks to the open source community for the libraries used in this project
+- Special thanks to all contributors who have helped improve this application
