@@ -8,6 +8,7 @@ import logging
 import time
 import random
 from typing import Dict, Any, Optional, List
+from selenium.webdriver.common.by import By
 import re
 import json
 
@@ -57,17 +58,17 @@ class PatreonInteractor:
             time.sleep(random.uniform(2, 4))
 
             # Enter email
-            email_field = browser.find_element_by_id("email")
+            email_field = browser.find_element(By.ID, "email")
             email_field.send_keys(self.credentials["username"])
             time.sleep(random.uniform(1, 2))
 
             # Enter password
-            password_field = browser.find_element_by_id("password")
+            password_field = browser.find_element(By.ID, "password")
             password_field.send_keys(self.credentials["password"])
             time.sleep(random.uniform(1, 2))
 
             # Check for CAPTCHA
-            captcha_elements = browser.find_elements_by_xpath(
+            captcha_elements = browser.find_elements(By.XPATH,  
                 "//iframe[contains(@src, 'recaptcha') or contains(@src, 'hcaptcha')]")
 
             if captcha_elements:
@@ -115,7 +116,7 @@ class PatreonInteractor:
                             return False
 
             # Click login button
-            login_button = browser.find_element_by_xpath("//button[@type='submit']")
+            login_button = browser.find_element(By.XPATH, "//button[@type='submit']")
             login_button.click()
             time.sleep(random.uniform(3, 5))
 
@@ -150,15 +151,15 @@ class PatreonInteractor:
             time.sleep(random.uniform(2, 4))
 
             # Enter title
-            title_field = browser.find_element_by_xpath("//input[@placeholder='Title']")
+            title_field = browser.find_element(By.XPATH, "//input[@placeholder='Title']")
             title_field.send_keys(title)
             time.sleep(random.uniform(1, 2))
 
             # Enter content (assuming a rich text editor)
-            content_iframe = browser.find_element_by_xpath("//iframe[contains(@class, 'editor-frame')]")
+            content_iframe = browser.find_element(By.XPATH, "//iframe[contains(@class, 'editor-frame')]")
             browser.switch_to.frame(content_iframe)
 
-            content_field = browser.find_element_by_xpath("//div[@contenteditable='true']")
+            content_field = browser.find_element(By.XPATH, "//div[@contenteditable='true']")
             content_field.send_keys(content)
 
             # Switch back to main frame
@@ -168,29 +169,29 @@ class PatreonInteractor:
             # Set access level
             if access_level != "public":
                 # Click access level dropdown
-                access_dropdown = browser.find_element_by_xpath(
+                access_dropdown = browser.find_element(By.XPATH, 
                     "//button[contains(@class, 'access-dropdown') or contains(text(), 'Public')]")
                 access_dropdown.click()
                 time.sleep(random.uniform(1, 2))
 
                 # Select access level
                 if access_level == "patrons":
-                    patrons_option = browser.find_element_by_xpath("//div[contains(text(), 'All patrons')]")
+                    patrons_option = browser.find_element(By.XPATH, "//div[contains(text(), 'All patrons')]")
                     patrons_option.click()
                 elif access_level == "specific_tier":
-                    tier_option = browser.find_element_by_xpath("//div[contains(text(), 'Specific tiers')]")
+                    tier_option = browser.find_element(By.XPATH, "//div[contains(text(), 'Specific tiers')]")
                     tier_option.click()
                     # Would need additional logic to select specific tiers
 
                 time.sleep(random.uniform(1, 2))
 
             # Click publish button
-            publish_button = browser.find_element_by_xpath("//button[contains(text(), 'Publish')]")
+            publish_button = browser.find_element(By.XPATH, "//button[contains(text(), 'Publish')]")
             publish_button.click()
             time.sleep(random.uniform(3, 5))
 
             # Check if post was created
-            success_elements = browser.find_elements_by_xpath(
+            success_elements = browser.find_elements(By.XPATH,  
                 "//div[contains(text(), 'successfully') or contains(text(), 'published')]")
 
             if success_elements:
@@ -220,7 +221,7 @@ class PatreonInteractor:
             time.sleep(random.uniform(3, 5))
 
             # Extract earnings information
-            earnings_element = browser.find_element_by_xpath(
+            earnings_element = browser.find_element(By.XPATH, 
                 "//div[contains(@class, 'earnings') or contains(@class, 'amount')]")
             earnings_text = earnings_element.text.strip()
 
@@ -229,7 +230,7 @@ class PatreonInteractor:
             earnings = float(earnings_match.group(1)) if earnings_match else 0
 
             # Extract patron count
-            patrons_element = browser.find_element_by_xpath(
+            patrons_element = browser.find_element(By.XPATH, 
                 "//div[contains(@class, 'patrons') or contains(text(), 'patrons')]")
             patrons_text = patrons_element.text.strip()
 

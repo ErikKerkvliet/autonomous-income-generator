@@ -9,6 +9,7 @@ import time
 import random
 import datetime
 from typing import Dict, Any, List, Optional
+from selenium.webdriver.common.by import By
 import re
 import json
 import os
@@ -299,24 +300,24 @@ class PaidSurveysStrategy(IncomeStrategy):
             self.random_delay(2, 4)
 
             # Accept cookies if prompted
-            cookie_buttons = browser.find_elements_by_xpath(
+            cookie_buttons = browser.find_elements(By.XPATH,  
                 "//button[contains(text(), 'Accept') or contains(text(), 'Accepteer')]")
             if cookie_buttons:
                 cookie_buttons[0].click()
                 self.random_delay(1, 2)
 
             # Enter email
-            email_field = browser.find_element_by_id("email") or browser.find_element_by_name("email")
+            email_field = browser.find_element(By.ID,  "email") or browser.find_element_by_name("email")
             email_field.send_keys(credentials["username"])
             self.random_delay(1, 2)
 
             # Enter password
-            password_field = browser.find_element_by_id("password") or browser.find_element_by_name("password")
+            password_field = browser.find_element(By.ID,  "password") or browser.find_element_by_name("password")
             password_field.send_keys(credentials["password"])
             self.random_delay(1, 2)
 
             # Click login button
-            login_button = browser.find_element_by_xpath("//button[@type='submit' or contains(text(), 'Inloggen')]")
+            login_button = browser.find_element(By.XPATH,  "//button[@type='submit' or contains(text(), 'Inloggen')]")
             login_button.click()
             self.random_delay(3, 5)
 
@@ -353,24 +354,24 @@ class PaidSurveysStrategy(IncomeStrategy):
             self.random_delay(2, 4)
 
             # Accept cookies if prompted
-            cookie_buttons = browser.find_elements_by_xpath(
+            cookie_buttons = browser.find_elements(By.XPATH,  
                 "//button[contains(text(), 'Accept') or contains(text(), 'Accepteer')]")
             if cookie_buttons:
                 cookie_buttons[0].click()
                 self.random_delay(1, 2)
 
             # Enter email
-            email_field = browser.find_element_by_id("username") or browser.find_element_by_name("username")
+            email_field = browser.find_element(By.ID,  "username") or browser.find_element_by_name("username")
             email_field.send_keys(credentials["username"])
             self.random_delay(1, 2)
 
             # Enter password
-            password_field = browser.find_element_by_id("password") or browser.find_element_by_name("password")
+            password_field = browser.find_element(By.ID,  "password") or browser.find_element_by_name("password")
             password_field.send_keys(credentials["password"])
             self.random_delay(1, 2)
 
             # Click login button
-            login_button = browser.find_element_by_xpath(
+            login_button = browser.find_element(By.XPATH,  
                 "//button[@type='submit' or contains(text(), 'Login') or contains(text(), 'Inloggen')]")
             login_button.click()
             self.random_delay(3, 5)
@@ -408,24 +409,24 @@ class PaidSurveysStrategy(IncomeStrategy):
             self.random_delay(2, 4)
 
             # Accept cookies if prompted
-            cookie_buttons = browser.find_elements_by_xpath(
+            cookie_buttons = browser.find_elements(By.XPATH,  
                 "//button[contains(text(), 'Accept') or contains(text(), 'Accepteer') or contains(text(), 'Got it')]")
             if cookie_buttons:
                 cookie_buttons[0].click()
                 self.random_delay(1, 2)
 
             # Enter email
-            email_field = browser.find_element_by_id("email") or browser.find_element_by_name("email")
+            email_field = browser.find_element(By.ID,  "email") or browser.find_element_by_name("email")
             email_field.send_keys(credentials["username"])
             self.random_delay(1, 2)
 
             # Enter password
-            password_field = browser.find_element_by_id("password") or browser.find_element_by_name("password")
+            password_field = browser.find_element(By.ID,  "password") or browser.find_element_by_name("password")
             password_field.send_keys(credentials["password"])
             self.random_delay(1, 2)
 
             # Click login button
-            login_button = browser.find_element_by_xpath(
+            login_button = browser.find_element(By.XPATH,  
                 "//button[@type='submit' or contains(text(), 'Sign in') or contains(text(), 'Login')]")
             login_button.click()
             self.random_delay(3, 5)
@@ -463,24 +464,24 @@ class PaidSurveysStrategy(IncomeStrategy):
             self.random_delay(2, 4)
 
             # Accept cookies if prompted
-            cookie_buttons = browser.find_elements_by_xpath(
+            cookie_buttons = browser.find_elements(By.XPATH,  
                 "//button[contains(text(), 'Accept') or contains(text(), 'Got it')]")
             if cookie_buttons:
                 cookie_buttons[0].click()
                 self.random_delay(1, 2)
 
             # Enter email
-            email_field = browser.find_element_by_id("email") or browser.find_element_by_name("email")
+            email_field = browser.find_element(By.ID,  "email") or browser.find_element_by_name("email")
             email_field.send_keys(credentials["username"])
             self.random_delay(1, 2)
 
             # Enter password
-            password_field = browser.find_element_by_id("password") or browser.find_element_by_name("password")
+            password_field = browser.find_element(By.ID,  "password") or browser.find_element_by_name("password")
             password_field.send_keys(credentials["password"])
             self.random_delay(1, 2)
 
             # Click login button
-            login_button = browser.find_element_by_xpath(
+            login_button = browser.find_element(By.XPATH,  
                 "//button[@type='submit' or contains(text(), 'Sign in') or contains(text(), 'Log in')]")
             login_button.click()
             self.random_delay(3, 5)
@@ -659,7 +660,7 @@ class PaidSurveysStrategy(IncomeStrategy):
             self.random_delay(2, 4)
 
             # Find survey elements
-            survey_elements = browser.find_elements_by_xpath(
+            survey_elements = browser.find_elements(By.XPATH,  
                 "//div[contains(@class, 'survey') or contains(@class, 'enquete')]")
 
             for element in survey_elements:
@@ -667,11 +668,11 @@ class PaidSurveysStrategy(IncomeStrategy):
                     # Extract survey information
                     survey_id = element.get_attribute("data-id") or str(random.randint(10000, 99999))
 
-                    title_element = element.find_element_by_xpath(".//h3 or .//div[contains(@class, 'title')]")
+                    title_element = element.find_element(By.XPATH,  ".//h3 or .//div[contains(@class, 'title')]")
                     title = title_element.text.strip()
 
                     # Extract reward
-                    reward_element = element.find_element_by_xpath(
+                    reward_element = element.find_element(By.XPATH,  
                         ".//span[contains(@class, 'reward') or contains(@class, 'points') or contains(@class, 'clix')]")
                     reward_text = reward_element.text.strip()
 
@@ -682,7 +683,7 @@ class PaidSurveysStrategy(IncomeStrategy):
 
                     # Extract duration if available
                     duration = 0
-                    duration_elements = element.find_elements_by_xpath(
+                    duration_elements = element.find_elements(By.XPATH,  
                         ".//span[contains(@class, 'duration') or contains(@class, 'time') or contains(text(), 'min')]")
                     if duration_elements:
                         duration_text = duration_elements[0].text.strip()
@@ -730,7 +731,7 @@ class PaidSurveysStrategy(IncomeStrategy):
             self.random_delay(2, 4)
 
             # Find survey elements
-            survey_elements = browser.find_elements_by_xpath(
+            survey_elements = browser.find_elements(By.XPATH,  
                 "//div[contains(@class, 'survey') or contains(@class, 'enquete')]")
 
             for element in survey_elements:
@@ -738,11 +739,11 @@ class PaidSurveysStrategy(IncomeStrategy):
                     # Extract survey information (implementation similar to EuroClix)
                     survey_id = element.get_attribute("data-id") or str(random.randint(10000, 99999))
 
-                    title_element = element.find_element_by_xpath(".//h3 or .//div[contains(@class, 'title')]")
+                    title_element = element.find_element(By.XPATH,  ".//h3 or .//div[contains(@class, 'title')]")
                     title = title_element.text.strip()
 
                     # Extract reward
-                    reward_element = element.find_element_by_xpath(
+                    reward_element = element.find_element(By.XPATH,  
                         ".//span[contains(@class, 'reward') or contains(@class, 'points') or contains(@class, 'clix')]")
                     reward_text = reward_element.text.strip()
 
@@ -753,7 +754,7 @@ class PaidSurveysStrategy(IncomeStrategy):
 
                     # Extract duration if available
                     duration = 0
-                    duration_elements = element.find_elements_by_xpath(
+                    duration_elements = element.find_elements(By.XPATH,  
                         ".//span[contains(@class, 'duration') or contains(@class, 'time') or contains(text(), 'min')]")
                     if duration_elements:
                         duration_text = duration_elements[0].text.strip()
@@ -801,18 +802,18 @@ class PaidSurveysStrategy(IncomeStrategy):
             self.random_delay(2, 4)
 
             # Find survey elements
-            survey_elements = browser.find_elements_by_xpath("//div[contains(@class, 'survey-item')]")
+            survey_elements = browser.find_elements(By.XPATH,  "//div[contains(@class, 'survey-item')]")
 
             for element in survey_elements:
                 try:
                     # Extract survey information
                     survey_id = element.get_attribute("data-survey-id") or str(random.randint(10000, 99999))
 
-                    title_element = element.find_element_by_xpath(".//div[contains(@class, 'title')] or .//h4")
+                    title_element = element.find_element(By.XPATH,  ".//div[contains(@class, 'title')] or .//h4")
                     title = title_element.text.strip()
 
                     # Extract reward
-                    reward_element = element.find_element_by_xpath(
+                    reward_element = element.find_element(By.XPATH,  
                         ".//span[contains(@class, 'reward') or contains(@class, 'points')]")
                     reward_text = reward_element.text.strip()
 
@@ -825,7 +826,7 @@ class PaidSurveysStrategy(IncomeStrategy):
 
                     # Extract duration if available
                     duration = 0
-                    duration_elements = element.find_elements_by_xpath(
+                    duration_elements = element.find_elements(By.XPATH,  
                         ".//span[contains(@class, 'duration') or contains(@class, 'time') or contains(text(), 'min')]")
                     if duration_elements:
                         duration_text = duration_elements[0].text.strip()
@@ -873,18 +874,18 @@ class PaidSurveysStrategy(IncomeStrategy):
             self.random_delay(2, 4)
 
             # Find survey elements
-            survey_elements = browser.find_elements_by_xpath("//div[contains(@class, 'survey-item')]")
+            survey_elements = browser.find_elements(By.XPATH,  "//div[contains(@class, 'survey-item')]")
 
             for element in survey_elements:
                 try:
                     # Extract survey information
                     survey_id = element.get_attribute("data-survey-id") or str(random.randint(10000, 99999))
 
-                    title_element = element.find_element_by_xpath(".//div[contains(@class, 'title')] or .//h3")
+                    title_element = element.find_element(By.XPATH,  ".//div[contains(@class, 'title')] or .//h3")
                     title = title_element.text.strip()
 
                     # Extract reward
-                    reward_element = element.find_element_by_xpath(
+                    reward_element = element.find_element(By.XPATH,  
                         ".//span[contains(@class, 'reward') or contains(@class, 'points')]")
                     reward_text = reward_element.text.strip()
 
@@ -897,7 +898,7 @@ class PaidSurveysStrategy(IncomeStrategy):
 
                     # Extract duration if available
                     duration = 0
-                    duration_elements = element.find_elements_by_xpath(
+                    duration_elements = element.find_elements(By.XPATH,  
                         ".//span[contains(@class, 'duration') or contains(@class, 'time') or contains(text(), 'min')]")
                     if duration_elements:
                         duration_text = duration_elements[0].text.strip()
@@ -989,7 +990,7 @@ class PaidSurveysStrategy(IncomeStrategy):
             try:
                 if 'element' in survey and survey['element']:
                     # Find clickable element within the survey item
-                    clickable = survey['element'].find_element_by_xpath(
+                    clickable = survey['element'].find_element(By.XPATH,  
                         ".//a[contains(@class, 'btn') or contains(@class, 'button')] or .//button")
                     clickable.click()
                     self.random_delay(4, 7)
@@ -1175,7 +1176,7 @@ class PaidSurveysStrategy(IncomeStrategy):
                     }
 
                 # Click Next/Submit button
-                next_buttons = browser.find_elements_by_xpath(
+                next_buttons = browser.find_elements(By.XPATH,  
                     "//button[contains(text(), 'Next') or contains(text(), 'Continue') or contains(text(), 'Submit')]"
                 )
 
@@ -1184,7 +1185,7 @@ class PaidSurveysStrategy(IncomeStrategy):
                     self.random_delay(3, 6)
                 else:
                     # Try alternative buttons
-                    alt_buttons = browser.find_elements_by_xpath(
+                    alt_buttons = browser.find_elements(By.XPATH,  
                         "//button[@type='submit'] or //input[@type='submit']"
                     )
 
@@ -1201,7 +1202,7 @@ class PaidSurveysStrategy(IncomeStrategy):
                             }
                         else:
                             # Try to find any button that might be next
-                            all_buttons = browser.find_elements_by_xpath("//button or //input[@type='button']")
+                            all_buttons = browser.find_elements(By.XPATH,  "//button or //input[@type='button']")
                             if all_buttons:
                                 all_buttons[-1].click()  # Try the last button
                                 self.random_delay(3, 6)
@@ -1266,7 +1267,7 @@ class PaidSurveysStrategy(IncomeStrategy):
             # Look for different question types and answer them
 
             # Multiple choice questions (radio buttons)
-            radio_buttons = browser.find_elements_by_xpath("//input[@type='radio']")
+            radio_buttons = browser.find_elements(By.XPATH,  "//input[@type='radio']")
             if radio_buttons:
                 # Group radio buttons by name attribute
                 radio_groups = {}
@@ -1303,7 +1304,7 @@ class PaidSurveysStrategy(IncomeStrategy):
                     self.random_delay(0.5, 1.5)
 
             # Checkboxes
-            checkboxes = browser.find_elements_by_xpath("//input[@type='checkbox']")
+            checkboxes = browser.find_elements(By.XPATH,  "//input[@type='checkbox']")
             if checkboxes:
                 # Group checkboxes by name attribute
                 checkbox_groups = {}
@@ -1328,11 +1329,11 @@ class PaidSurveysStrategy(IncomeStrategy):
                         self.random_delay(0.5, 1.0)
 
             # Dropdown selects
-            selects = browser.find_elements_by_xpath("//select")
+            selects = browser.find_elements(By.XPATH,  "//select")
             if selects:
                 for select in selects:
                     # Find all options
-                    options = select.find_elements_by_xpath(".//option")
+                    options = select.find_elements(By.XPATH,  ".//option")
 
                     # Filter out placeholder options (usually the first one)
                     valid_options = [opt for opt in options if opt.get_attribute("value")]
@@ -1344,7 +1345,7 @@ class PaidSurveysStrategy(IncomeStrategy):
                         self.random_delay(0.5, 1.5)
 
             # Text inputs
-            text_inputs = browser.find_elements_by_xpath("//input[@type='text'] or //textarea")
+            text_inputs = browser.find_elements(By.XPATH,  "//input[@type='text'] or //textarea")
             if text_inputs:
                 for text_input in text_inputs:
                     # Try to determine what kind of information is needed based on attributes
@@ -1384,7 +1385,7 @@ class PaidSurveysStrategy(IncomeStrategy):
                     self.random_delay(1, 2)
 
             # Range sliders
-            sliders = browser.find_elements_by_xpath("//input[@type='range']")
+            sliders = browser.find_elements(By.XPATH,  "//input[@type='range']")
             if sliders:
                 for slider in sliders:
                     # Get the min, max, and step values
@@ -1400,7 +1401,7 @@ class PaidSurveysStrategy(IncomeStrategy):
                     self.random_delay(0.5, 1.5)
 
             # Star ratings
-            star_ratings = browser.find_elements_by_xpath(
+            star_ratings = browser.find_elements(By.XPATH,  
                 "//div[contains(@class, 'rating') or contains(@class, 'stars')]//input")
             if star_ratings:
                 # Group by name attribute
@@ -1513,7 +1514,7 @@ class PaidSurveysStrategy(IncomeStrategy):
                 self.random_delay(2, 4)
 
                 # Look for balance element
-                balance_elements = browser.find_elements_by_xpath(
+                balance_elements = browser.find_elements(By.XPATH,  
                     "//div[contains(@class, 'balance') or contains(@class, 'saldo')]"
                 )
 
@@ -1529,7 +1530,7 @@ class PaidSurveysStrategy(IncomeStrategy):
                 self.random_delay(2, 4)
 
                 # Look for balance element
-                balance_elements = browser.find_elements_by_xpath(
+                balance_elements = browser.find_elements(By.XPATH,  
                     "//div[contains(@class, 'balance') or contains(@class, 'saldo')]"
                 )
 
@@ -1545,7 +1546,7 @@ class PaidSurveysStrategy(IncomeStrategy):
                 self.random_delay(2, 4)
 
                 # Look for points element
-                points_elements = browser.find_elements_by_xpath(
+                points_elements = browser.find_elements(By.XPATH,  
                     "//div[contains(@class, 'points') or contains(@class, 'balance')]"
                 )
 
@@ -1563,7 +1564,7 @@ class PaidSurveysStrategy(IncomeStrategy):
                 self.random_delay(2, 4)
 
                 # Look for balance element
-                balance_elements = browser.find_elements_by_xpath(
+                balance_elements = browser.find_elements(By.XPATH,  
                     "//div[contains(@class, 'balance') or contains(@class, 'points')]"
                 )
 

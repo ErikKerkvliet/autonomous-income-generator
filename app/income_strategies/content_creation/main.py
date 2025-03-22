@@ -9,6 +9,7 @@ import logging
 import random
 import time
 from typing import Dict, Any, List, Optional
+from selenium.webdriver.common.by import By
 import datetime
 import json
 
@@ -589,17 +590,17 @@ class ContentCreationStrategy(IncomeStrategy):
                 self.random_delay(2, 4)
 
                 # Enter username/email
-                username_field = browser.find_element_by_id("email")
+                username_field = browser.find_element(By.ID,  "email")
                 username_field.send_keys(credentials["username"])
                 self.random_delay(1, 2)
 
                 # Enter password
-                password_field = browser.find_element_by_id("password")
+                password_field = browser.find_element(By.ID,  "password")
                 password_field.send_keys(credentials["password"])
                 self.random_delay(1, 2)
 
                 # Click login button
-                login_button = browser.find_element_by_xpath("//button[@type='submit']")
+                login_button = browser.find_element(By.XPATH, "//button[@type='submit']")
                 login_button.click()
                 self.random_delay(3, 5)
 
@@ -612,23 +613,23 @@ class ContentCreationStrategy(IncomeStrategy):
                 post_content = self._generate_patreon_update(content_info)
 
                 # Find and click the "Create" or "New Post" button
-                create_button = browser.find_element_by_xpath(
+                create_button = browser.find_element(By.XPATH, 
                     "//a[contains(@href, '/posts/new') or contains(text(), 'Create') or contains(text(), 'New Post')]")
                 create_button.click()
                 self.random_delay(2, 3)
 
                 # Fill in post details
-                title_field = browser.find_element_by_xpath("//input[@placeholder='Title']")
+                title_field = browser.find_element(By.XPATH, "//input[@placeholder='Title']")
                 title_field.send_keys(post_title)
                 self.random_delay(1, 2)
 
                 # Fill in post content (might be in an iframe or rich text editor)
-                content_field = browser.find_element_by_xpath("//div[contains(@class, 'editor') or @role='textbox']")
+                content_field = browser.find_element(By.XPATH, "//div[contains(@class, 'editor') or @role='textbox']")
                 content_field.send_keys(post_content)
                 self.random_delay(2, 3)
 
                 # Submit post
-                publish_button = browser.find_element_by_xpath(
+                publish_button = browser.find_element(By.XPATH, 
                     "//button[contains(text(), 'Publish') or contains(text(), 'Post')]")
                 publish_button.click()
                 self.random_delay(3, 5)
@@ -638,7 +639,7 @@ class ContentCreationStrategy(IncomeStrategy):
                 self.random_delay(2, 3)
 
                 # Check for the post title to verify it was published
-                posts = browser.find_elements_by_xpath(f"//h1[contains(text(), '{post_title}')]")
+                posts = browser.find_elements(By.XPATH, f"//h1[contains(text(), '{post_title}')]")
                 if posts:
                     self.log_info("Successfully published Patreon update")
                     return True
@@ -738,17 +739,17 @@ class ContentCreationStrategy(IncomeStrategy):
                 self.random_delay(2, 4)
 
                 # Enter username/email
-                username_field = browser.find_element_by_id("email")
+                username_field = browser.find_element(By.ID,  "email")
                 username_field.send_keys(credentials["username"])
                 self.random_delay(1, 2)
 
                 # Enter password
-                password_field = browser.find_element_by_id("password")
+                password_field = browser.find_element(By.ID,  "password")
                 password_field.send_keys(credentials["password"])
                 self.random_delay(1, 2)
 
                 # Click login button
-                login_button = browser.find_element_by_xpath("//button[@type='submit']")
+                login_button = browser.find_element(By.XPATH, "//button[@type='submit']")
                 login_button.click()
                 self.random_delay(3, 5)
 
@@ -758,7 +759,7 @@ class ContentCreationStrategy(IncomeStrategy):
 
                 # Extract earnings information
                 # Note: This is a placeholder and needs to be adapted to the actual Patreon dashboard structure
-                earnings_element = browser.find_element_by_xpath(
+                earnings_element = browser.find_element(By.XPATH, 
                     "//div[contains(@class, 'earnings') or contains(@class, 'amount')]")
                 earnings_text = earnings_element.text.strip()
 
@@ -771,7 +772,7 @@ class ContentCreationStrategy(IncomeStrategy):
                     earnings = 0
 
                 # Extract patron count
-                patrons_element = browser.find_element_by_xpath(
+                patrons_element = browser.find_element(By.XPATH, 
                     "//div[contains(@class, 'patrons') or contains(text(), 'patrons')]")
                 patrons_text = patrons_element.text.strip()
 

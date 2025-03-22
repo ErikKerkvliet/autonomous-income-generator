@@ -10,6 +10,7 @@ import time
 import random
 import datetime
 from typing import Dict, Any, List, Optional
+from selenium.webdriver.common.by import By
 import json
 import re
 
@@ -173,22 +174,22 @@ class FreelancingStrategy(IncomeStrategy):
             self.random_delay(2, 4)
 
             # Enter username/email
-            username_field = browser.find_element_by_id("login_username")
+            username_field = browser.find_element(By.ID, "login_username")
             username_field.send_keys(credentials["username"])
             self.random_delay(1, 2)
 
             # Click continue
-            continue_button = browser.find_element_by_id("login_password_continue")
+            continue_button = browser.find_element(By.ID, "login_password_continue")
             continue_button.click()
             self.random_delay(2, 4)
 
             # Enter password
-            password_field = browser.find_element_by_id("login_password")
+            password_field = browser.find_element(By.ID, "login_password")
             password_field.send_keys(credentials["password"])
             self.random_delay(1, 2)
 
             # Click login button
-            login_button = browser.find_element_by_id("login_control_continue")
+            login_button = browser.find_element(By.ID, "login_control_continue")
             login_button.click()
             self.random_delay(3, 6)
 
@@ -234,7 +235,7 @@ class FreelancingStrategy(IncomeStrategy):
                 self.random_delay(2, 4)
 
                 # Get job listings
-                job_elements = browser.find_elements_by_xpath("//section[contains(@class, 'job-tile')]")
+                job_elements = browser.find_elements(By.XPATH, "//section[contains(@class, 'job-tile')]")
                 self.log_info(f"Found {len(job_elements)} job listings for '{keyword}'")
 
                 for job_element in job_elements[:10]:  # Limit to first 10 results
@@ -242,17 +243,17 @@ class FreelancingStrategy(IncomeStrategy):
                         # Extract job information
                         job_id = job_element.get_attribute("data-job-id") or str(random.randint(10000, 99999))
 
-                        title_element = job_element.find_element_by_xpath(".//h2[contains(@class, 'job-title')]")
+                        title_element = job_element.find_element(By.XPATH, ".//h2[contains(@class, 'job-title')]")
                         title = title_element.text.strip()
 
                         # Extract client information
-                        client_element = job_element.find_element_by_xpath(".//div[contains(@class, 'client-name')]")
+                        client_element = job_element.find_element(By.XPATH, ".//div[contains(@class, 'client-name')]")
                         client_info = client_element.text.strip()
                         client_name = client_info.split('\n')[0] if '\n' in client_info else client_info
                         client_id = "client_" + str(random.randint(10000, 99999))
 
                         # Extract job type and budget
-                        terms_element = job_element.find_element_by_xpath(".//div[contains(@class, 'job-price')]")
+                        terms_element = job_element.find_element(By.XPATH, ".//div[contains(@class, 'job-price')]")
                         terms_text = terms_element.text.strip()
 
                         job_type = "fixed" if "Fixed Price" in terms_text else "hourly"
@@ -274,7 +275,7 @@ class FreelancingStrategy(IncomeStrategy):
                                     budget = float(rate_match.group(1))
 
                         # Extract description
-                        desc_element = job_element.find_element_by_xpath(".//span[contains(@class, 'description')]")
+                        desc_element = job_element.find_element(By.XPATH, ".//span[contains(@class, 'description')]")
                         description = desc_element.text.strip()
 
                         # Check if the job meets our criteria
@@ -344,16 +345,16 @@ class FreelancingStrategy(IncomeStrategy):
             self.random_delay(2, 4)
 
             # Extract detailed description
-            description_element = browser.find_element_by_xpath("//div[contains(@class, 'job-description')]")
+            description_element = browser.find_element(By.XPATH, "//div[contains(@class, 'job-description')]")
             description = description_element.text.strip()
             job['description'] = description
 
             # Extract client details
-            client_info_element = browser.find_element_by_xpath("//div[contains(@class, 'client-info')]")
+            client_info_element = browser.find_element(By.XPATH, "//div[contains(@class, 'client-info')]")
             client_info = client_info_element.text.strip()
 
             # Extract requirements or skills
-            skills_elements = browser.find_elements_by_xpath("//span[contains(@class, 'skill')]")
+            skills_elements = browser.find_elements(By.XPATH, "//span[contains(@class, 'skill')]")
             skills = [element.text.strip() for element in skills_elements]
             job['requirements'] = ", ".join(skills)
 
@@ -538,7 +539,7 @@ class FreelancingStrategy(IncomeStrategy):
             self.random_delay(2, 4)
 
             # Find and click the "Submit a Proposal" button
-            submit_button = browser.find_element_by_xpath("//a[contains(text(), 'Submit a Proposal')]")
+            submit_button = browser.find_element(By.XPATH, "//a[contains(text(), 'Submit a Proposal')]")
             submit_button.click()
             self.random_delay(3, 5)
 
@@ -547,28 +548,28 @@ class FreelancingStrategy(IncomeStrategy):
 
             # Set bid amount
             if job['job_type'] == 'fixed':
-                bid_input = browser.find_element_by_xpath("//input[contains(@name, 'amount')]")
+                bid_input = browser.find_element(By.XPATH, "//input[contains(@name, 'amount')]")
                 bid_input.clear()
                 bid_input.send_keys(str(int(job['bid_amount'])))
             else:  # hourly
-                bid_input = browser.find_element_by_xpath("//input[contains(@name, 'hourlyRate')]")
+                bid_input = browser.find_element(By.XPATH, "//input[contains(@name, 'hourlyRate')]")
                 bid_input.clear()
                 bid_input.send_keys(str(int(job['bid_amount'])))
 
             self.random_delay(1, 2)
 
             # Fill in proposal text
-            proposal_textarea = browser.find_element_by_xpath("//textarea[contains(@name, 'coverLetter')]")
+            proposal_textarea = browser.find_element(By.XPATH, "//textarea[contains(@name, 'coverLetter')]")
             proposal_textarea.send_keys(proposal_text)
             self.random_delay(2, 3)
 
             # Click submit button
-            submit_proposal_button = browser.find_element_by_xpath("//button[contains(text(), 'Submit')]")
+            submit_proposal_button = browser.find_element(By.XPATH, "//button[contains(text(), 'Submit')]")
             submit_proposal_button.click()
             self.random_delay(3, 5)
 
             # Check if submission was successful
-            success_elements = browser.find_elements_by_xpath(
+            success_elements = browser.find_elements(By.XPATH, 
                 "//div[contains(text(), 'Proposal submitted') or contains(text(), 'Success')]")
 
             if success_elements:
@@ -608,15 +609,15 @@ class FreelancingStrategy(IncomeStrategy):
             self.random_delay(2, 4)
 
             # Check active contracts
-            browser.find_element_by_xpath("//a[contains(text(), 'Active Contracts')]").click()
+            browser.find_element(By.XPATH, "//a[contains(text(), 'Active Contracts')]").click()
             self.random_delay(2, 4)
 
             # Get active job elements
-            job_elements = browser.find_elements_by_xpath("//section[contains(@class, 'job-tile')]")
+            job_elements = browser.find_elements(By.XPATH, "//section[contains(@class, 'job-tile')]")
 
             for job_element in job_elements:
                 try:
-                    job_link = job_element.find_element_by_xpath(".//a[contains(@class, 'job-title')]")
+                    job_link = job_element.find_element(By.XPATH, ".//a[contains(@class, 'job-title')]")
                     title = job_link.text.strip()
 
                     # Extract job ID from link
@@ -640,7 +641,7 @@ class FreelancingStrategy(IncomeStrategy):
                     job = dict(result[0])
 
                     # Check if there are any messages
-                    messages_element = job_element.find_elements_by_xpath(".//span[contains(text(), 'New message')]")
+                    messages_element = job_element.find_elements(By.XPATH, ".//span[contains(text(), 'New message')]")
                     if messages_element:
                         # There are new messages, navigate to the job
                         job_link.click()
@@ -652,7 +653,7 @@ class FreelancingStrategy(IncomeStrategy):
                         # Go back to jobs list
                         browser.get("https://www.upwork.com/nx/find-work/my-jobs/")
                         self.random_delay(2, 4)
-                        browser.find_element_by_xpath("//a[contains(text(), 'Active Contracts')]").click()
+                        browser.find_element(By.XPATH, "//a[contains(text(), 'Active Contracts')]").click()
                         self.random_delay(2, 4)
 
                     # Update job status
@@ -673,11 +674,11 @@ class FreelancingStrategy(IncomeStrategy):
             self.random_delay(2, 4)
 
             # Get offer elements
-            offer_elements = browser.find_elements_by_xpath("//section[contains(@class, 'offer-tile')]")
+            offer_elements = browser.find_elements(By.XPATH, "//section[contains(@class, 'offer-tile')]")
 
             for offer_element in offer_elements:
                 try:
-                    offer_title_element = offer_element.find_element_by_xpath(".//a[contains(@class, 'job-title')]")
+                    offer_title_element = offer_element.find_element(By.XPATH, ".//a[contains(@class, 'job-title')]")
                     title = offer_title_element.text.strip()
 
                     # Extract job ID
@@ -701,7 +702,7 @@ class FreelancingStrategy(IncomeStrategy):
                         job['status'] = 'offer'
                     else:
                         # This is a new job offer
-                        budget_element = offer_element.find_element_by_xpath(".//span[contains(@class, 'budget')]")
+                        budget_element = offer_element.find_element(By.XPATH, ".//span[contains(@class, 'budget')]")
                         budget_text = budget_element.text.strip()
 
                         budget = 0.0
@@ -730,7 +731,7 @@ class FreelancingStrategy(IncomeStrategy):
 
                     # Extract more details
                     try:
-                        description_element = browser.find_element_by_xpath(
+                        description_element = browser.find_element(By.XPATH, 
                             "//div[contains(@class, 'job-description')]")
                         job['description'] = description_element.text.strip()
                     except:
@@ -741,12 +742,12 @@ class FreelancingStrategy(IncomeStrategy):
 
                     if job['evaluation']['should_bid']:
                         # Accept the offer
-                        accept_button = browser.find_element_by_xpath("//button[contains(text(), 'Accept')]")
+                        accept_button = browser.find_element(By.XPATH, "//button[contains(text(), 'Accept')]")
                         accept_button.click()
                         self.random_delay(2, 4)
 
                         # Confirm acceptance if needed
-                        confirm_buttons = browser.find_elements_by_xpath("//button[contains(text(), 'Confirm')]")
+                        confirm_buttons = browser.find_elements(By.XPATH, "//button[contains(text(), 'Confirm')]")
                         if confirm_buttons:
                             confirm_buttons[0].click()
                             self.random_delay(2, 4)
@@ -778,11 +779,11 @@ class FreelancingStrategy(IncomeStrategy):
             self.random_delay(2, 4)
 
             # Get proposal elements
-            proposal_elements = browser.find_elements_by_xpath("//section[contains(@class, 'job-tile')]")
+            proposal_elements = browser.find_elements(By.XPATH, "//section[contains(@class, 'job-tile')]")
 
             for proposal_element in proposal_elements:
                 try:
-                    proposal_title_element = proposal_element.find_element_by_xpath(
+                    proposal_title_element = proposal_element.find_element(By.XPATH, 
                         ".//a[contains(@class, 'job-title')]")
                     title = proposal_title_element.text.strip()
 
@@ -806,7 +807,7 @@ class FreelancingStrategy(IncomeStrategy):
                     job = dict(result[0])
 
                     # Check if there's been a response
-                    response_elements = proposal_element.find_elements_by_xpath(
+                    response_elements = proposal_element.find_elements(By.XPATH, 
                         ".//span[contains(text(), 'Invitation to interview') or contains(text(), 'Message')]")
 
                     if response_elements:
@@ -818,7 +819,7 @@ class FreelancingStrategy(IncomeStrategy):
                         self._process_job_messages(browser, job)
 
                         # Check if we've been hired
-                        hired_elements = browser.find_elements_by_xpath(
+                        hired_elements = browser.find_elements(By.XPATH, 
                             "//div[contains(text(), 'You have been hired for this job')]")
 
                         if hired_elements:
@@ -859,7 +860,7 @@ class FreelancingStrategy(IncomeStrategy):
         """
         try:
             # Look for messages
-            message_elements = browser.find_elements_by_xpath("//div[contains(@class, 'message-bubble')]")
+            message_elements = browser.find_elements(By.XPATH, "//div[contains(@class, 'message-bubble')]")
 
             if not message_elements:
                 return
@@ -869,7 +870,7 @@ class FreelancingStrategy(IncomeStrategy):
             for message_element in message_elements:
                 try:
                     # Determine if this is from the client (not us)
-                    sender_elements = message_element.find_elements_by_xpath(".//div[contains(@class, 'sender-info')]")
+                    sender_elements = message_element.find_elements(By.XPATH, ".//div[contains(@class, 'sender-info')]")
 
                     if not sender_elements:
                         continue
@@ -878,7 +879,7 @@ class FreelancingStrategy(IncomeStrategy):
 
                     if job['client_name'] in sender_info or "Client" in sender_info:
                         # This is a message from the client
-                        message_content = message_element.find_element_by_xpath(
+                        message_content = message_element.find_element(By.XPATH, 
                             ".//div[contains(@class, 'message-content')]")
                         message_text = message_content.text.strip()
 
@@ -945,12 +946,12 @@ class FreelancingStrategy(IncomeStrategy):
             response = self.api_manager.generate_text(prompt)
 
             # Find the message input field
-            message_input = browser.find_element_by_xpath("//textarea[contains(@placeholder, 'Type a message')]")
+            message_input = browser.find_element(By.XPATH, "//textarea[contains(@placeholder, 'Type a message')]")
             message_input.send_keys(response)
             self.random_delay(2, 3)
 
             # Click send button
-            send_button = browser.find_element_by_xpath("//button[contains(@aria-label, 'Send message')]")
+            send_button = browser.find_element(By.XPATH, "//button[contains(@aria-label, 'Send message')]")
             send_button.click()
             self.random_delay(1, 3)
 
@@ -1271,12 +1272,12 @@ class FreelancingStrategy(IncomeStrategy):
             update_message = self.api_manager.generate_text(prompt)
 
             # Find the message input field
-            message_input = browser.find_element_by_xpath("//textarea[contains(@placeholder, 'Type a message')]")
+            message_input = browser.find_element(By.XPATH, "//textarea[contains(@placeholder, 'Type a message')]")
             message_input.send_keys(update_message)
             self.random_delay(2, 3)
 
             # Click send button
-            send_button = browser.find_element_by_xpath("//button[contains(@aria-label, 'Send message')]")
+            send_button = browser.find_element(By.XPATH, "//button[contains(@aria-label, 'Send message')]")
             send_button.click()
             self.random_delay(1, 3)
 
@@ -1314,7 +1315,7 @@ class FreelancingStrategy(IncomeStrategy):
             self.random_delay(2, 4)
 
             # Click on the "Submit Work for Payment" button
-            submit_button = browser.find_element_by_xpath(
+            submit_button = browser.find_element(By.XPATH, 
                 "//button[contains(text(), 'Submit Work') or contains(text(), 'Submit for Payment')]")
             submit_button.click()
             self.random_delay(2, 4)
@@ -1340,19 +1341,19 @@ class FreelancingStrategy(IncomeStrategy):
             summary = self.api_manager.generate_text(prompt)
 
             # Find the submission textarea
-            submission_textarea = browser.find_element_by_xpath(
+            submission_textarea = browser.find_element(By.XPATH, 
                 "//textarea[contains(@placeholder, 'Describe the work')]")
             submission_textarea.send_keys(summary)
             self.random_delay(2, 3)
 
             # Click the submit button
-            final_submit_button = browser.find_element_by_xpath(
+            final_submit_button = browser.find_element(By.XPATH, 
                 "//button[contains(text(), 'Submit') and @type='submit']")
             final_submit_button.click()
             self.random_delay(3, 5)
 
             # Check if submission was successful
-            success_elements = browser.find_elements_by_xpath(
+            success_elements = browser.find_elements(By.XPATH, 
                 "//div[contains(text(), 'submitted') or contains(text(), 'Success')]")
 
             if success_elements:
@@ -1390,7 +1391,7 @@ class FreelancingStrategy(IncomeStrategy):
             self.random_delay(2, 4)
 
             # Extract earnings information
-            earnings_element = browser.find_element_by_xpath("//div[contains(@data-test, 'earnings-to-date')]")
+            earnings_element = browser.find_element(By.XPATH, "//div[contains(@data-test, 'earnings-to-date')]")
             earnings_text = earnings_element.text.strip()
 
             # Parse earnings amount

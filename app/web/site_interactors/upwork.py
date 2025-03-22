@@ -8,6 +8,7 @@ import logging
 import time
 import random
 from typing import Dict, Any, Optional, List
+from selenium.webdriver.common.by import By
 import re
 import json
 
@@ -57,22 +58,22 @@ class UpworkInteractor:
             time.sleep(random.uniform(2, 4))
 
             # Enter username
-            username_field = browser.find_element_by_id("login_username")
+            username_field = browser.find_element(By.ID, "login_username")
             username_field.send_keys(self.credentials["username"])
             time.sleep(random.uniform(1, 2))
 
             # Click continue
-            continue_button = browser.find_element_by_id("login_password_continue")
+            continue_button = browser.find_element(By.ID, "login_password_continue")
             continue_button.click()
             time.sleep(random.uniform(2, 4))
 
             # Enter password
-            password_field = browser.find_element_by_id("login_password")
+            password_field = browser.find_element(By.ID, "login_password")
             password_field.send_keys(self.credentials["password"])
             time.sleep(random.uniform(1, 2))
 
             # Check for CAPTCHA
-            captcha_elements = browser.find_elements_by_xpath(
+            captcha_elements = browser.find_elements(By.XPATH,
                 "//iframe[contains(@src, 'recaptcha') or contains(@src, 'hcaptcha')]")
 
             if captcha_elements:
@@ -120,7 +121,7 @@ class UpworkInteractor:
                             return False
 
             # Click login button
-            login_button = browser.find_element_by_id("login_control_continue")
+            login_button = browser.find_element(By.ID, "login_control_continue")
             login_button.click()
             time.sleep(random.uniform(3, 6))
 
@@ -168,7 +169,7 @@ class UpworkInteractor:
                 time.sleep(random.uniform(2, 4))
 
                 # Get job listings
-                job_elements = browser.find_elements_by_xpath("//section[contains(@class, 'job-tile')]")
+                job_elements = browser.find_elements(By.XPATH,  "//section[contains(@class, 'job-tile')]")
                 self.logger.info(f"Found {len(job_elements)} job listings")
 
                 for job_element in job_elements[:10]:  # Limit to first 10 results
@@ -176,7 +177,7 @@ class UpworkInteractor:
                         # Extract job information (implementation details omitted for brevity)
                         job = {
                             'id': job_element.get_attribute("data-job-id") or str(random.randint(10000, 99999)),
-                            'title': job_element.find_element_by_xpath(
+                            'title': job_element.find_element(By.XPATH, 
                                 ".//h2[contains(@class, 'job-title')]").text.strip(),
                             # Additional job details...
                         }
